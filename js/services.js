@@ -4,7 +4,7 @@ angular.module('code-civil-git.services', ['ui.router'])
 
 .service('GitService', function($timeout){
 	var github = new Github({
-	  token: "4bff5e4b2ea79ff0e99b10dc7a9f10291bc7350a",
+	  token: "<OAUTH_TOKEN>",
 	  auth: "oauth"
 	});
 	

@@ -193,6 +193,10 @@ footer a {
 	color: #666;
 }
 
+footer .links a {
+	margin: 0 16px;
+}
+
 footer .credits {
 	color: #aaa;
 	margin-top: 32px;
