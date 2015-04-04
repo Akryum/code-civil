@@ -1,0 +1,19 @@
+<div id="page-home" class="page" ng-controller="HomeCtrl as Home">
+
+	<div class="breadcumb">
+		<a href="#/" title="Accueil"><i class="fa fa-home"></i> Accueil</a><span class="presentation"> - Parcourez le Code Civil facilement et rapidement !</span>
+	</div>
+
+	<h2>Code Civil <span class="secondary">Realtime</span></h2>
+	
+	<div class="spinner" ng-show="Home.loading"/>
+
+	<nav ng-hide="Home.loading">
+		<ul>
+			<li ng-repeat="tree in Home.tree | filter:{type:'tree'} | orderBy:[Home.treeOrderFunction, path]">
+				<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.path }}</a>
+			</li>
+		</ul>
+	</nav>
+
+</div>

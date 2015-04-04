@@ -1,0 +1,243 @@
+body {
+	font-family: sans-serif;
+	margin: 0;
+	background: #f8f8f8;
+}
+
+header {
+	background: white;
+	padding: 0 42px;
+	margin-bottom: 12px;
+	display: flex;
+	flex-direction: row;
+}
+
+header > div {
+	flex: auto 1 1;
+}
+
+a {
+	color: #1b71ba;
+	text-decoration: none;
+	transition: color 0.1s;
+	cursor: pointer;
+}
+
+a:hover {
+	color: #3e96e0;
+}
+
+.error {
+	color: #9b2727;
+}
+
+.search-box {
+	background: white;
+	font-size: 1;
+	font-family: sans-serif;
+	color: #444;
+	display: flex;
+	flex-direction: row;
+}
+
+.search-input {
+	padding: 16px;
+	border: none;
+	background: none;
+	flex: auto 1 1;
+	outline: none;
+	font-size: 1em;
+}
+
+.search-action {
+	display: inline-block;
+	padding: 16px 0;
+	padding-left: 0;
+	width: 15px;
+	text-align: center;
+}
+
+.search-results {
+	position: fixed;
+	top: 50px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: white;
+	z-index: 10;
+	padding: 10px 42px;
+	border-top: solid 1px #eee;
+	overflow: auto;
+}
+
+.search-results > .spinner {
+	padding: 200px 0;
+}
+
+.search-results > .no-result {
+	padding: 10px 30px;
+	color: #999;
+}
+
+.search-result {
+	padding: 24px 0;
+	border-bottom: solid 1px #eee;
+}
+
+.search-result:last-child {
+	border-bottom: none;
+}
+
+.search-result .spinner {
+	padding: 0;
+	height: 16px;
+	background-size: contain;
+	margin: 0;
+}
+
+.search-result .preview {
+	color: #666;
+}
+
+.search-result .preview p {
+	margin: 6px 0;
+}
+
+.search-result .preview p strong {
+	font-weight: normal;
+	background: rgb(207, 231, 255);
+}
+
+h2 {
+	color: #444;
+	font-weight: normal;
+	font-size: 1.6em;
+}
+
+h2 .secondary {
+	color: #aaa;
+}
+
+.page {
+	padding: 10px 42px;
+}
+
+.breadcumb {
+	padding: 0 2px;
+}
+
+.breadcumb .tree:before {
+	content: "/ ";
+	color: #bbb !important;
+	cursor: default;
+}
+
+.presentation {
+	color: #888;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+nav li {
+	list-style: none;
+}
+
+nav li a {
+	display: block;
+	padding: 10px;
+	margin: 6px 0;
+	background: #fff;
+	border-radius: 3px;
+	transition: background 0.1s;
+}
+
+nav li a:hover {
+}
+
+nav li a .fa {
+	margin-right: 4px;
+}
+
+.spinner {
+	height: 32px;
+	margin: 64px 0;
+	background: url('../img/spinner.gif') no-repeat center center;
+}
+
+article {
+	background: white;
+	margin: 0;
+	padding: 6px 32px;
+	margin: 20px 0;
+	border-radius: 3px;
+	max-width: 800px;
+	text-align: justify;
+}
+
+article h2 {
+	margin-top: 16px;
+}
+
+footer {
+	margin-top: 42px;
+	font-size: 0.95em;
+	text-align: center;
+	border-top: solid 1px #eee;
+	padding: 32px 10px;
+}
+
+footer a {
+	color: #666;
+}
+
+footer .credits {
+	color: #aaa;
+	margin-top: 32px;
+	font-size: 0.7em;
+}
+
+
+@media(max-width: 640px) {
+	header {
+		padding: 0 10px;
+	}
+	
+	.search-results > .no-result {
+		padding: 10px 0;
+	}
+	
+	.search-result .preview {
+		max-height: 100px;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	.search-result .preview:after {
+		content:"";
+		display: block;
+		background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+		position: absolute;
+		height: 40px;
+		left: 0;
+		right: 0;
+		top: 60px;
+		pointer-events: none;
+	}
+	
+	.page {
+		padding: 10px 10px;
+	}
+	
+	article {
+		padding: 2px 16px;
+	}
+}

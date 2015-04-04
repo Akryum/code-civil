@@ -1,0 +1,26 @@
+<div id="page-tree" class="page" ng-controller="TreeCtrl as Tree">
+
+	<div class="breadcumb">
+		<a href="#/" title="Accueil"><i class="fa fa-home"></i></a>
+		<span ng-repeat="link in Tree.breadcumb">
+			<a class="tree" href="#/tree/{{link.path}}">{{ link.name }}</a>
+		</span>
+	</div>
+
+	<h2>{{ Tree.name }}</h2>
+	
+	<div class="spinner" ng-show="Tree.loading"/>
+
+	<nav ng-hide="Tree.loading">
+		<ul>
+			<li ng-repeat="tree in Tree.tree | filter:{type:'dir'} | orderBy:[Tree.treeOrderFunction, name]">
+				<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.name }}</a>
+			</li>
+
+			<li ng-repeat="tree in Tree.tree | filter:Tree.fileFilterFunction | orderBy:[Tree.treeOrderFunction, name]">
+				<a href="#/read/{{tree.path}}"><i class="fa fa-file"></i> {{ tree.name | fileName }}</a>
+			</li>
+		</ul>
+	</nav>
+
+</div>
