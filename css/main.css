@@ -161,18 +161,31 @@ h2 .fa {
 	margin-right: 6px;
 }
 
+/* Section */
+
+section {
+	background: white;
+	padding: 32px;
+	margin: 20px 0;
+	border-radius: 3px;
+}
+
+section > *:first-child {
+	margin-top: 0;
+}
+
 /* Nav */
 
-nav ul {
+nav > ul {
 	margin: 0;
 	padding: 0;
 }
 
-nav li {
+nav > ul > li {
 	list-style: none;
 }
 
-nav li a {
+nav > ul > li > a {
 	display: block;
 	padding: 10px;
 	margin: 6px 0;
@@ -182,10 +195,14 @@ nav li a {
 	max-width: 844px;
 }
 
-nav li a:hover {}
+nav > ul > li > a:hover {}
 
-nav li a .fa {
+nav > ul > li > a .fa {
 	margin-right: 4px;
+}
+
+nav > a {
+	margin-right: 10px;
 }
 
 /* Article */

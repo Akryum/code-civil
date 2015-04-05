@@ -13,6 +13,35 @@ angular.module('code-civil-git.services', [])
 	var repo = github.getRepo("steeve", "france.code-civil");
 
 	var cache = new Object();
+	
+	// Full tree
+	var files = null;
+	var loadingFiles = false;
+	var filesWaiters = new Array();
+	
+	function loadFullTree() {
+		loadingFiles = true;
+		repo.getTree('master?recursive=true', function(err, data) {
+			files = new Object();
+			if(err) {
+				console.error(err);
+			} else {
+				
+				// Process objects
+				var obj, name;
+				for(var i = data.length - 1; i != -1; i--) {
+					obj = data[i];
+					name = obj.path.substr(obj.path.lastIndexOf('/') + 1).toLowerCase();
+					files[name] = obj;
+				}
+				
+				// Apply waiting callbacks
+				for(var i = filesWaiters.length - 1; i != -1; i--) {
+					filesWaiters[i].apply();
+				}
+			}
+		});
+	}
 
 	return {
 		/**
@@ -31,6 +60,19 @@ angular.module('code-civil-git.services', [])
 						};
 						callback.apply(null, [err, data]);
 					});
+				});
+			}
+		},
+		getFile: function(name, callback) {
+			console.log(name);
+			if(files) {
+				callback.apply(null, [files[name.toLowerCase()]]);
+			} else {
+				if(!loadingFiles) {
+					loadFullTree();
+				}
+				filesWaiters.push(function(){
+					callback.apply(null, [files[name.toLowerCase()]]);
 				});
 			}
 		},
@@ -110,7 +152,7 @@ angular.module('code-civil-git.services', [])
 
 /* Tools */
 
-.service('Tools', function () {
+.service('Tools', function (GitService) {
 
 	function fromRoman(roman, accept) {
 		var s = roman.toUpperCase().replace(/ +/g, ''),
@@ -203,11 +245,37 @@ angular.module('code-civil-git.services', [])
 		},
 
 		getFileName: function (input) {
-			var match = input.match(/^(.+)\.([a-z]+)$/i);
-			if (match) {
-				input = match[1];
+			if(input) {
+				var match = input.match(/^(.+)\.([a-z]+)$/i);
+				if (match) {
+					input = match[1];
+				}
 			}
 			return input;
+		},
+		
+		parseArticle: function (data, path) {
+			data = data.substr(data.indexOf('----') + 5);
+			
+			var parentPath = path.substring(0, path.lastIndexOf('/'));
+			data = data.replace(/article\s([0-9]+(-[0-9]+)?)(\sdu\scode\spénal)?/ig, function(match, d1, d2, d3){
+				if(d3) {
+					return match;
+				} else {
+					return '<a href="#/article/' + d1 + '">' + match + '</a>';
+				}
+			});
+			
+			return data;
+		},
+		
+		fixPath: function(path) {
+			
+			path = path.replace(/\/[^\/]/ig, function(match) {
+				return match.toUpperCase();
+			});
+			
+			return path;
 		}
 	}
 })

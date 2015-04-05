@@ -53,7 +53,7 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 
 /* <article-preview> */
 
-.directive('articlePreview', function(GitService){
+.directive('articlePreview', function(GitService, Tools){
 	return {
 		restrict: 'E',
 		scope: {
@@ -70,7 +70,9 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 				if (err) {
 					$scope.error = err;
 				} else {
-					data = data.substr(data.indexOf('----') + 5);
+					
+					data = Tools.parseArticle(data, $scope.path);
+					
 					$scope.data = data;
 				}
 			});

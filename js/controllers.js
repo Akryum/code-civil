@@ -29,11 +29,11 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 
 /* List Tree */
 
-.controller('TreeCtrl', function ($stateParams, GitService, SettingsService, Tools) {
+.controller('TreeCtrl', function ($state, $stateParams, GitService, SettingsService, Tools) {
 
 	var controller = this;
 
-	controller.path = $stateParams.path;
+	controller.path = Tools.fixPath($stateParams.path);
 
 	controller.loading = true;
 
@@ -61,7 +61,10 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 		controller.loading = false;
 
 		if (err) {
-			controller.error = err;
+			console.log(err);
+			$state.go('error', {
+				message: "Dossier introuvable."
+			});
 		} else {
 			controller.tree = tree;
 		}
@@ -77,35 +80,58 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 
 /* Read Article */
 
-.controller('ReadCtrl', function ($stateParams, GitService, Tools) {
+.controller('ReadCtrl', function ($state, $stateParams, GitService, Tools) {
 
 	var controller = this;
 
-	controller.path = $stateParams.path;
-
 	controller.loading = true;
+	
+	console.log($stateParams);
 
-	controller.breadcumb = Tools.createProgressivePath(controller.path);
-
-	controller.name = controller.breadcumb[controller.breadcumb.length - 1].name;
-
-	GitService.read(controller.path, function (err, data) {
-		controller.loading = false;
-
-		if (err) {
-			controller.error = err;
-		} else {
-			data = data.substr(data.indexOf('----') + 5);
-			controller.data = data;
-		}
-	});
-
-	// Page title
-	var title = "";
-	for (var i = 0; i < controller.breadcumb.length; i++) {
-		title += " - " + Tools.getFileName(controller.breadcumb[i].name);
+	if($stateParams.path) {
+		controller.path = Tools.fixPath($stateParams.path);
+		read();
+	} else if($stateParams.id) {
+		GitService.getFile("article " + $stateParams.id + ".md", function(file) {
+			if(file) {
+				controller.path = file.path;
+				read();
+			} else {
+				$state.go('error', {
+					message: "Article introuvable."
+				});
+			}
+		})
 	}
-	document.title = "Code Civil " + title;
+
+	function read() {
+
+		controller.breadcumb = Tools.createProgressivePath(controller.path);
+
+		controller.name = controller.breadcumb[controller.breadcumb.length - 1].name;
+		
+		GitService.read(controller.path, function (err, data) {
+			controller.loading = false;
+
+			if (err) {
+				console.log(err);
+				$state.go('error', {
+					message: "Article introuvable."
+				});
+			} else {
+				data = Tools.parseArticle(data, controller.path);
+
+				controller.data = data;
+			}
+		});
+
+		// Page title
+		var title = "";
+		for (var i = 0; i < controller.breadcumb.length; i++) {
+			title += " - " + Tools.getFileName(controller.breadcumb[i].name);
+		}
+		document.title = "Code Civil " + title;
+	}
 })
 
 /* Search */
@@ -137,8 +163,12 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 
 /* Error */
 
-.controller('ErrorCtrl', function () {
-	this.message = "Ceci est un message d'erreur.";
+.controller('ErrorCtrl', function ($stateParams) {
+	var controller = this;
+	
+	console.log($stateParams);
+	
+	controller.message = $stateParams.message;
 
 	document.title = "Code Civil Cloud - Erreur";
 })

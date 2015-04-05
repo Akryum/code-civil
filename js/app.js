@@ -11,6 +11,9 @@ angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-gi
 	// States
 	$stateProvider
 		.state('error', {
+			params: {
+				message: ""
+			},
 			templateUrl: "partials/frame/error.html"
 		})
 		.state('home', {
@@ -23,6 +26,10 @@ angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-gi
 		})
 		.state('read', {
 			url: '/read/{path:.*}',
+			templateUrl: "partials/frame/read.html"
+		})
+		.state('article', {
+			url: '/article/{id:.*}',
 			templateUrl: "partials/frame/read.html"
 		})
 })
