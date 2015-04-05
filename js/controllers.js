@@ -98,7 +98,7 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 		}
 	});
 	
-	document.title = "Code Civil Realtime";
+	document.title = "Code Civil Cloud";
 })
 
 .controller('TreeCtrl', function ($stateParams, GitService, SettingsService) {
@@ -228,5 +228,5 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 .controller('ErrorCtrl', function () {
 	this.message = "Ceci est un message d'erreur.";
 	
-	document.title = "Code Civil Realtime - Erreur";
+	document.title = "Code Civil Cloud - Erreur";
 })
