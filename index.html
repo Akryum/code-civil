@@ -52,15 +52,9 @@
 						
 						<div class="error" ng-show="Search.error">{{ Search.error }}</div>
 						
-						<div class="search-result" ng-repeat="result in Search.results" ng-controller="SearchResultCtrl as SearchResult" ng-hide="Search.loading">
+						<div class="search-result" ng-repeat="result in Search.results" ng-hide="Search.loading">
 							
-							<a href="#/read/{{result.path}}" ng-click="Search.closed = true">
-								<div class="link">{{ result.name | fileName }}</div>
-								
-								<div class="spinner" ng-show="SearchResult.loading"></div>
-							
-								<div class="preview" btf-markdown="SearchResult.preview"></div>
-							</a>
+							<search-result path="result.path" name="result.name" search-query="searchQuery" ng-click="Search.closed = true"/>
 							
 						</div>
 						

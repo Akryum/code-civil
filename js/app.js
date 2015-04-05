@@ -1,13 +1,5 @@
 'use strict';
 
-function getFileName(input) {
-	var match = input.match(/^(.+)\.([a-z]+)$/i);
-	if (match) {
-		input = match[1];
-	}
-	return input;
-}
-
 angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-git.controllers', 'code-civil-git.services', 'code-civil-git.directives'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -33,6 +25,6 @@ angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-gi
 		})
 })
 
-.filter("fileName", function () {
-	return getFileName;
+.filter("fileName", function (Tools) {
+	return Tools.getFileName;
 })
