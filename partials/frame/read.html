@@ -7,6 +7,8 @@
 		</span>
 	</div>
 	
+	<h2><i class="fa fa-file"></i> {{ Read.name | fileName }}</h2>
+	
 	<div class="spinner" ng-show="Read.loading"/>
 	
 	<article btf-markdown="Read.data" ng-hide="Read.loading"></article>

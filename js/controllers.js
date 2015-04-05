@@ -101,7 +101,7 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 	document.title = "Code Civil Realtime";
 })
 
-.controller('TreeCtrl', function ($stateParams, GitService) {
+.controller('TreeCtrl', function ($stateParams, GitService, SettingsService) {
 	
 	var controller = this;
 	
@@ -113,13 +113,20 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 	
 	controller.name = controller.breadcumb[controller.breadcumb.length - 1].name;
 	
+	controller.showPreviews = SettingsService.getItem('tree.showPreviews', false);
+	
 	controller.treeOrderFunction = function(tree) {
 		return nameSort(tree.name);
 	};
 	
 	controller.fileFilterFunction = function(tree) {
 		return tree.type == 'file' && !tree.path.match(/readme/ig);
-	}
+	};
+	
+	controller.toggleShowPreviews = function() {
+		controller.showPreviews = !controller.showPreviews;
+		SettingsService.setItem('tree.showPreviews', controller.showPreviews);
+	};
 	
 	GitService.contents(controller.path, function (err, tree) {
 	
@@ -158,6 +165,7 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 		if (err) {
 			controller.error = err;
 		} else {
+			data = data.substr(data.indexOf('----') + 5);
 			controller.data = data;
 		}
 	});

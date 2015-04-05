@@ -8,7 +8,7 @@ function getFileName(input) {
 	return input;
 }
 
-angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-git.controllers'])
+angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-git.controllers', 'code-civil-git.services', 'code-civil-git.directives'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 	// Default
@@ -31,20 +31,6 @@ angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-gi
 			url: '/read/{path:.*}',
 			templateUrl: "partials/frame/read.html"
 		})
-})
-
-.directive('ngEnter', function () {
-	return function (scope, element, attrs) {
-		element.bind("keydown keypress", function (event) {
-			if (event.which === 13) {
-				scope.$apply(function () {
-					scope.$eval(attrs.ngEnter);
-				});
-
-				event.preventDefault();
-			}
-		});
-	};
 })
 
 .filter("fileName", function () {

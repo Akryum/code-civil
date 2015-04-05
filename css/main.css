@@ -31,6 +31,13 @@ a:hover {
 	color: #9b2727;
 }
 
+.spinner {
+	height: 32px;
+	margin: 64px 0;
+	background: url('../img/spinner.gif') no-repeat center center;
+	background-size: contain;
+}
+
 .search-box {
 	background: white;
 	font-size: 1;
@@ -71,7 +78,7 @@ a:hover {
 }
 
 .search-results > .spinner {
-	padding: 200px 0;
+	margin: 200px 0;
 }
 
 .search-results > .no-result {
@@ -89,9 +96,7 @@ a:hover {
 }
 
 .search-result .spinner {
-	padding: 0;
 	height: 16px;
-	background-size: contain;
 	margin: 0;
 }
 
@@ -111,11 +116,17 @@ a:hover {
 h2 {
 	color: #444;
 	font-weight: normal;
-	font-size: 1.6em;
+	font-size: 1.8em;
+	margin-top: 24px;
+	margin-bottom: 6px;
 }
 
 h2 .secondary {
 	color: #aaa;
+}
+
+h2 .fa {
+	margin-right: 4px;
 }
 
 .page {
@@ -136,6 +147,14 @@ h2 .secondary {
 	color: #888;
 }
 
+.page .actions {
+	padding: 10px;
+}
+
+.page .actions a {
+	margin-right: 6px;
+}
+
 nav ul {
 	margin: 0;
 	padding: 0;
@@ -152,6 +171,7 @@ nav li a {
 	background: #fff;
 	border-radius: 3px;
 	transition: background 0.1s;
+	max-width: 844px;
 }
 
 nav li a:hover {
@@ -161,15 +181,8 @@ nav li a .fa {
 	margin-right: 4px;
 }
 
-.spinner {
-	height: 32px;
-	margin: 64px 0;
-	background: url('../img/spinner.gif') no-repeat center center;
-}
-
 article {
 	background: white;
-	margin: 0;
 	padding: 6px 32px;
 	margin: 20px 0;
 	border-radius: 3px;
@@ -179,6 +192,23 @@ article {
 
 article h2 {
 	margin-top: 16px;
+}
+
+.article-preview .spinner {
+	height: 16px;
+	margin: 4px 0;
+	max-width: 800px;
+}
+
+.article-preview article {
+	margin-top: -18px;
+	margin-bottom: 6px;
+	padding: 4px 32px;
+	font-size: 0.95em;
+}
+
+.article-preview article p {
+	margin: 10px 0;
 }
 
 footer {

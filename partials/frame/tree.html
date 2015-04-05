@@ -7,7 +7,14 @@
 		</span>
 	</div>
 
-	<h2>{{ Tree.name }}</h2>
+	<h2><i class="fa fa-book"></i> {{ Tree.name }}</h2>
+	
+	<div class="actions">
+		<a ng-click="Tree.toggleShowPreviews()">
+			<span ng-if="!Tree.showPreviews"><li class="fa fa-eye"></li> Afficher les articles</span>
+			<span ng-if="Tree.showPreviews"><li class="fa fa-eye-slash"></li> Masquer les articles</span>
+		</a>
+	</div>
 	
 	<div class="spinner" ng-show="Tree.loading"/>
 
@@ -19,6 +26,7 @@
 
 			<li ng-repeat="tree in Tree.tree | filter:Tree.fileFilterFunction | orderBy:[Tree.treeOrderFunction, name]">
 				<a href="#/read/{{tree.path}}"><i class="fa fa-file"></i> {{ tree.name | fileName }}</a>
+				<article-preview path="tree.path" ng-if="Tree.showPreviews"></article-preview>
 			</li>
 		</ul>
 	</nav>

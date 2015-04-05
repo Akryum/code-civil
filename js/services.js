@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('code-civil-git.services', ['ui.router'])
+angular.module('code-civil-git.services', [])
 
 .service('GitService', function($timeout){
 	var github = new Github({
-	  token: "<OAUTH_TOKEN>",
+	  token: "",
 	  auth: "oauth"
 	});
 	
@@ -69,4 +69,19 @@ angular.module('code-civil-git.services', ['ui.router'])
 			});
 		}
 	};
+})
+
+.service('SettingsService', function() {
+	return {
+		getItem:function(id, defaultValue) {
+			var value = localStorage.getItem(id);
+			if(value == null) {
+				return defaultValue;
+			}
+			return value;
+		},
+		setItem:function(id, value) {
+			localStorage.setItem(id, value);
+		}
+	}
 })
