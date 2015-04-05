@@ -1,4 +1,6 @@
 <div id="page-tree" class="page" ng-controller="TreeCtrl as Tree">
+	
+	<!-- Breadcumb -->
 
 	<div class="breadcumb">
 		<a href="#/" title="Accueil"><i class="fa fa-home"></i></a>
@@ -6,8 +8,12 @@
 			<a class="tree" href="#/tree/{{link.path}}">{{ link.name }}</a>
 		</span>
 	</div>
+	
+	<!-- Title -->
 
 	<h2><i class="fa fa-book"></i> {{ Tree.name }}</h2>
+	
+	<!-- Actions -->
 	
 	<div class="actions">
 		<a ng-click="Tree.toggleShowPreviews()">
@@ -16,13 +22,20 @@
 		</a>
 	</div>
 	
+	<!-- Content -->
+	
 	<div class="spinner" ng-show="Tree.loading"/>
 
 	<nav ng-hide="Tree.loading">
 		<ul>
+			
+			<!-- Folders -->
+			
 			<li ng-repeat="tree in Tree.tree | filter:{type:'dir'} | orderBy:[Tree.treeOrderFunction, name]">
 				<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.name }}</a>
 			</li>
+			
+			<!-- Files -->
 
 			<li ng-repeat="tree in Tree.tree | filter:Tree.fileFilterFunction | orderBy:[Tree.treeOrderFunction, name]">
 				<a href="#/read/{{tree.path}}"><i class="fa fa-file"></i> {{ tree.name | fileName }}</a>

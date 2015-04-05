@@ -1,7 +1,9 @@
 'use strict';
 
+/* Main app declaration */
 angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-git.controllers', 'code-civil-git.services', 'code-civil-git.directives'])
 
+/* App Configuration */
 .config(function ($stateProvider, $urlRouterProvider) {
 	// Default
 	$urlRouterProvider.otherwise("/");
@@ -25,6 +27,7 @@ angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-gi
 		})
 })
 
+/* Removes file extension */
 .filter("fileName", function (Tools) {
 	return Tools.getFileName;
 })

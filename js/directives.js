@@ -2,6 +2,8 @@
 
 angular.module('code-civil-git.directives', ['code-civil-git.services'])
 
+/* ng-enter="" */
+
 .directive('ngEnter', function () {
 	return function (scope, element, attrs) {
 		element.bind("keydown keypress", function (event) {
@@ -15,6 +17,8 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 		});
 	};
 })
+
+/* <search-result> */
 
 .directive('searchResult', function(GitService) {
 	return {
@@ -30,7 +34,8 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 			$scope.preview = null;
 
 			$scope.loading = true;
-
+			
+			// Reads article content
 			GitService.read($scope.path, function (err, data) {
 				$scope.loading = false;
 				if (err) {
@@ -46,6 +51,8 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 	}
 })
 
+/* <article-preview> */
+
 .directive('articlePreview', function(GitService){
 	return {
 		restrict: 'E',
@@ -54,8 +61,10 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 		},
 		templateUrl: 'partials/directive/article-preview.html',
 		controller: function($scope) {
+			
 			$scope.loading = true;
-			console.log($scope.path);
+			
+			// Reads article content
 			GitService.read($scope.path, function (err, data) {
 				$scope.loading = false;
 				if (err) {

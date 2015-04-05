@@ -2,6 +2,8 @@
 
 angular.module('code-civil-git.services', [])
 
+/* GitHub */
+
 .service('GitService', function ($timeout) {
 	var github = new Github({
 		token: "",
@@ -13,6 +15,9 @@ angular.module('code-civil-git.services', [])
 	var cache = new Object();
 
 	return {
+		/**
+		 * Lists the folders under the master branch.
+		 */
 		getTree: function (callback) {
 			var cached = cache['master'];
 			if (cached) {
@@ -29,6 +34,9 @@ angular.module('code-civil-git.services', [])
 				});
 			}
 		},
+		/**
+		 * Lists the file and folders under the path.
+		 */
 		contents: function (path, callback) {
 			var cached = cache[path];
 			if (cached) {
@@ -45,6 +53,9 @@ angular.module('code-civil-git.services', [])
 				});
 			}
 		},
+		/**
+		 * Reads a file.
+		 */
 		read: function (path, callback) {
 			var cached = cache[path];
 			if (cached) {
@@ -61,6 +72,9 @@ angular.module('code-civil-git.services', [])
 				});
 			}
 		},
+		/**
+		 * Searches the repo for words.
+		 */
 		search: function (q, callback) {
 			repo.search(q, function (err, data) {
 				$timeout(function () {
@@ -68,11 +82,16 @@ angular.module('code-civil-git.services', [])
 				});
 			});
 		},
+		/**
+		 * Gets commits.
+		 */
 		getCommits: function (callback) {
 
 		}
 	};
 })
+
+/* Settings */
 
 .service('SettingsService', function () {
 	return {
@@ -88,6 +107,8 @@ angular.module('code-civil-git.services', [])
 		}
 	}
 })
+
+/* Tools */
 
 .service('Tools', function () {
 
