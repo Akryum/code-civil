@@ -125,31 +125,48 @@
 			//
 			function checkIfShouldStick() {
 				var scrollTop, shouldStick, scrollBottom, scrolledDistance, parentBottom;
+				
+				var elem = $elem[0];
 
 				if ( mediaQuery && !(matchMedia('('+mediaQuery+')').matches || matchMedia(mediaQuery).matches) )
 					return;
 				
-				parentBottom = $elem[0].parentNode.getBoundingClientRect().bottom;
+				var parentBounds = elem.parentNode.getBoundingClientRect();
+				
+				parentBottom = parentBounds.bottom;
 				
 				if(isSticking) {
-					parentBottom += $elem[0].offsetHeight;
+					parentBottom += elem.offsetHeight;
 				}
 
 				if ( anchor === 'top' ) {
 					scrolledDistance = window.pageYOffset || doc.scrollTop;
 					scrollTop        = scrolledDistance  - (doc.clientTop || 0);
-					shouldStick      = scrollTop >=  stickyLine && parentBottom >= 100;
+					shouldStick      = scrollTop >= stickyLine && parentBottom >= elem.offsetHeight;
 				} else {
 					scrollBottom     = window.pageYOffset + window.innerHeight;
 					shouldStick      = scrollBottom <= stickyLine;
 				}
 
 				// Switch the sticky mode if the element crosses the sticky line
-				if ( shouldStick && !isSticking )
-					stickElement();
-						
-				else if ( !shouldStick && isSticking )
-					unstickElement();
+				
+				if( elem.getAttribute('sticky-margin') != undefined ) {
+					
+					if( shouldStick ) {
+						$elem.css('margin-top', - parentBounds.top + 'px');
+					} else {
+						$elem.css('margin-top', 0);
+					}
+					
+				} else {
+
+					if ( shouldStick && !isSticking )
+						stickElement();
+
+					else if ( !shouldStick && isSticking )
+						unstickElement();
+					
+				}
 			}
 
 			function stickElement() {

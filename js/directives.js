@@ -96,8 +96,6 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 			GitService.getCommit($scope.commit.sha, function(err, data) {
 				$scope.loading = false;
 				
-				console.log(data);
-				
 				if(err) {
 					
 				} else {

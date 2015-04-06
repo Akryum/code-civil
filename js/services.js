@@ -222,7 +222,9 @@ angular.module('code-civil-git.services', [])
 
 		nameSort: function (name) {
 			var score = 0;
-
+			
+			console.log(name);
+			
 			if (name.match(/préliminaire/ig)) {
 				score -= 1000;
 			}
@@ -309,8 +311,6 @@ angular.module('code-civil-git.services', [])
 			
 			var oldText = "";
 			var newText = "";
-			
-			console.log(lines);
 			
 			var l = lines.length, line;
 			for(var i = 0; i < l; i++) {

@@ -1,22 +1,26 @@
 <div class="page page-read" ng-controller="ReadCtrl as Read">
-	
+
 	<!-- Breadcumb -->
-	
+
 	<div class="breadcumb">
 		<a href="#/" title="Accueil"><i class="fa fa-home"></i></a>
 		<span ng-repeat="link in Read.breadcumb">
 			<a class="tree" href="#/{{ (link.index == Read.breadcumb.length - 1)?'read':'tree' }}/{{link.path}}">{{ link.name | fileName }}</a>
 		</span>
 	</div>
-	
+
 	<!-- Title -->
-	
+
 	<h2><i class="fa fa-file"></i> {{ Read.name | fileName }}</h2>
-	
+
 	<!-- Content -->
-	
-	<div class="spinner" ng-show="Read.loading"/>
-	
-	<article btf-markdown="Read.data" ng-hide="Read.loading"></article>
-	
+
+	<div class="spinner" ng-show="Read.loading" />
+
+	<div class="page-content">
+
+		<article btf-markdown="Read.data" ng-hide="Read.loading"></article>
+
+	</div>
+
 </div>

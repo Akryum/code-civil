@@ -35,7 +35,6 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 	
 	GitService.getCommits(function(err, data) {
 		controller.loading = false;
-		console.log(data);
 		
 		if(err) {
 			
@@ -72,6 +71,10 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 	controller.treeOrderFunction = function (tree) {
 		return Tools.nameSort(tree.name);
 	};
+	
+	controller.summaryOrderFunction = function (tree) {
+		return Tools.nameSort(tree.path);
+	};
 
 	controller.fileFilterFunction = function (tree) {
 		return tree.type == 'file' && !tree.path.match(/readme/ig);
@@ -93,6 +96,14 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 			});
 		} else {
 			controller.tree = tree;
+		}
+	});
+	
+	GitService.getTree(function (err, tree) {
+		if (err) {
+			controller.error = err;
+		} else {
+			controller.summary = tree;
 		}
 	});
 	

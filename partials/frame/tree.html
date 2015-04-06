@@ -25,23 +25,37 @@
 	<!-- Content -->
 	
 	<div class="spinner" ng-show="Tree.loading"/>
+	
+	<div class="page-content" ng-hide="Tree.loading">
 
-	<nav ng-hide="Tree.loading">
-		<ul>
-			
-			<!-- Folders -->
-			
-			<li ng-repeat="tree in Tree.tree | filter:{type:'dir'} | orderBy:[Tree.treeOrderFunction, name]">
-				<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.name }}</a>
-			</li>
-			
-			<!-- Files -->
+		<nav class="tree">
+			<ul>
 
-			<li ng-repeat="tree in Tree.tree | filter:Tree.fileFilterFunction | orderBy:[Tree.treeOrderFunction, name]">
-				<a href="#/read/{{tree.path}}"><i class="fa fa-file"></i> {{ tree.name | fileName }}</a>
-				<article-preview path="tree.path" ng-if="Tree.showPreviews"></article-preview>
-			</li>
-		</ul>
-	</nav>
+				<!-- Folders -->
+
+				<li ng-repeat="tree in Tree.tree | filter:{type:'dir'} | orderBy:[Tree.treeOrderFunction, name]">
+					<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.name }}</a>
+				</li>
+
+				<!-- Files -->
+
+				<li ng-repeat="tree in Tree.tree | filter:Tree.fileFilterFunction | orderBy:[Tree.treeOrderFunction, name]">
+					<a href="#/read/{{tree.path}}"><i class="fa fa-file"></i> {{ tree.name | fileName }}</a>
+					<article-preview path="tree.path" ng-if="Tree.showPreviews"></article-preview>
+				</li>
+			</ul>
+		</nav>
+		
+		<!-- Summary -->
+		
+		<nav class="summary" sticky sticky-margin>
+			<ul>
+				<li ng-repeat="tree in Tree.summary | filter:{type:'tree'} | orderBy:[Tree.summaryOrderFunction, path]" ng-class="{current:tree.path == Tree.breadcumb[0].name}">
+					<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.path }}</a>
+				</li>
+			</ul>
+		</nav>
+		
+	</div>
 
 </div>

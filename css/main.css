@@ -39,7 +39,6 @@ a:hover {
 	background: url('../img/spinner.gif') no-repeat center center;
 	background-size: contain;
 }
-
 /* Search */
 
 .search-box {
@@ -116,7 +115,6 @@ a:hover {
 	font-weight: normal;
 	background: rgb(207, 231, 255);
 }
-
 /* Page */
 
 h2 {
@@ -161,6 +159,16 @@ h2 .fa {
 	margin-right: 6px;
 }
 
+.page-content {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	max-width: 844px;
+}
+
+.page-content > * {
+	flex: auto 1 1;
+}
 /* Section */
 
 section.block {
@@ -173,7 +181,6 @@ section.block {
 section.block > *:first-child {
 	margin-top: 0;
 }
-
 /* Nav */
 
 nav > ul {
@@ -183,16 +190,15 @@ nav > ul {
 
 nav > ul > li {
 	list-style: none;
+	background: #fff;
+	border-radius: 3px;
 }
 
 nav > ul > li > a {
 	display: block;
 	padding: 10px;
 	margin: 6px 0;
-	background: #fff;
-	border-radius: 3px;
 	transition: background 0.1s;
-	max-width: 844px;
 }
 
 nav > ul > li > a:hover {}
@@ -204,7 +210,28 @@ nav > ul > li > a .fa {
 nav > a {
 	margin-right: 10px;
 }
+/* Summary */
 
+.tree {}
+
+.summary {
+	margin-left: 24px;
+	padding-top: 16px;
+	flex: 160px 0 0;
+}
+
+.summary > ul > li {
+	background: none;
+}
+
+.summary > ul > li > a {
+	padding: 0;
+	margin: 6px 0;
+}
+
+.summary .current {
+	font-weight: bold;
+}
 /* Article */
 
 article {
@@ -212,7 +239,6 @@ article {
 	padding: 6px 32px;
 	margin: 20px 0;
 	border-radius: 3px;
-	max-width: 800px;
 	text-align: justify;
 }
 
@@ -220,10 +246,13 @@ article h2 {
 	margin-top: 16px;
 }
 
+.article-preview {
+	display: block;
+}
+
 .article-preview .spinner {
 	height: 16px;
 	margin: 4px 0;
-	max-width: 800px;
 }
 
 .article-preview article {
@@ -236,7 +265,6 @@ article h2 {
 .article-preview article p {
 	margin: 10px 0;
 }
-
 /* Commit */
 
 .commit {
@@ -246,7 +274,6 @@ article h2 {
 	background: #fff;
 	border-radius: 3px;
 	transition: background 0.1s;
-	max-width: 824px;
 }
 
 .commit .message.sticky {
@@ -290,7 +317,6 @@ article h2 {
 	background: #fcc8c8;
 	color: #bc2626;
 }
-
 /* Footer */
 
 footer {
@@ -314,7 +340,6 @@ footer .credits {
 	margin-top: 32px;
 	font-size: 0.7em;
 }
-
 /* Mobile */
 
 @media(max-width: 640px) {
@@ -365,5 +390,8 @@ footer .credits {
 	}
 	article {
 		padding: 2px 16px;
+	}
+	.summary {
+		display: none;
 	}
 }
