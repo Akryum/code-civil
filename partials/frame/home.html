@@ -1,25 +1,51 @@
-<div class="page page-home" ng-controller="HomeCtrl as Home">
+<div class="page page-home">
 
 	<!-- Breadcumb -->
-	
+
 	<div class="breadcumb">
 		<a href="#/" title="Accueil"><i class="fa fa-home"></i> Accueil</a><span class="presentation"> - Parcourez le Code Civil facilement et rapidement !</span>
 	</div>
 	
-	<!-- Title -->
+	<!-- Home list -->
 
-	<h2><i class="fa fa-cloud"></i> Code Civil <span class="secondary">Cloud</span></h2>
-	
-	<!-- Content -->
-	
-	<div class="spinner" ng-show="Home.loading"/>
+	<section ng-controller="HomeCtrl as Home">
 
-	<nav ng-hide="Home.loading">
-		<ul>
-			<li ng-repeat="tree in Home.tree | filter:{type:'tree'} | orderBy:[Home.treeOrderFunction, path]">
-				<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.path }}</a>
-			</li>
-		</ul>
-	</nav>
+		<!-- Title -->
+
+		<h2><i class="fa fa-cloud"></i> Code Civil <span class="secondary">Cloud</span></h2>
+
+		<!-- Content -->
+
+		<div class="spinner" ng-show="Home.loading" />
+
+		<nav ng-hide="Home.loading">
+			<ul>
+				<li ng-repeat="tree in Home.tree | filter:{type:'tree'} | orderBy:[Home.treeOrderFunction, path]">
+					<a href="#/tree/{{tree.path}}"><i class="fa fa-book"></i> {{ tree.path }}</a>
+				</li>
+			</ul>
+		</nav>
+
+	</section>
+
+	<!-- Commits -->
+
+	<section ng-controller="CommitsCtrl as Commits">
+
+		<!-- Title -->
+
+		<h2><i class="fa fa-history"></i> Modifications récentes</h2>
+		
+		<!-- Content -->
+		
+		<div class="spinner" ng-show="Commits.loading"/>
+		
+		<div class="commits">
+			
+			<commit ng-repeat="commit in Commits.commits" commit="commit"/>
+			
+		</div>
+
+	</section>
 
 </div>

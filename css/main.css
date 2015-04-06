@@ -163,14 +163,14 @@ h2 .fa {
 
 /* Section */
 
-section {
+section.block {
 	background: white;
 	padding: 32px;
 	margin: 20px 0;
 	border-radius: 3px;
 }
 
-section > *:first-child {
+section.block > *:first-child {
 	margin-top: 0;
 }
 
@@ -235,6 +235,60 @@ article h2 {
 
 .article-preview article p {
 	margin: 10px 0;
+}
+
+/* Commit */
+
+.commit {
+	padding: 20px;
+	margin-top: 10px;
+	margin-bottom: 42px;
+	background: #fff;
+	border-radius: 3px;
+	transition: background 0.1s;
+	max-width: 824px;
+}
+
+.commit .message.sticky {
+	background: white;
+	padding: 10px 0;
+	z-index: 100;
+	border-bottom: solid 1px #ddd;
+}
+
+.commit .file {
+	color: #666;
+	margin: 20px 0;
+	padding-bottom: 20px;
+	border-bottom: dashed 1px #ddd;
+}
+
+.commit .file:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.commit .file .title {
+	margin-right: 10px;
+}
+
+.commit .file .status {
+	display: inline-block;
+	color: #999;
+}
+
+.commit .file .diff {
+	text-align: justify;
+}
+
+.diff ins {
+	background: #b4fab4;
+	text-decoration: none;
+}
+
+.diff del {
+	background: #fcc8c8;
+	color: #bc2626;
 }
 
 /* Footer */

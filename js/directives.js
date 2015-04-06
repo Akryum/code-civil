@@ -79,3 +79,37 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 		}
 	}
 })
+
+/* <commit> */
+
+.directive('commit', function(GitService, Tools) {
+	return {
+		restrict: 'E',
+		scope: {
+			commit: '='
+		},
+		templateUrl: 'partials/directive/commit.html',
+		controller: function($scope) {
+			
+			$scope.loading = true;
+			
+			GitService.getCommit($scope.commit.sha, function(err, data) {
+				$scope.loading = false;
+				
+				console.log(data);
+				
+				if(err) {
+					
+				} else {
+					$scope.files = data.files;
+					
+					var l = data.files.length;
+					for(var i = 0; i < l; i ++) {
+						data.files[i].diff = Tools.formatDiff(data.files[i].patch);
+					}
+				}
+			});
+			
+		}
+	}
+})

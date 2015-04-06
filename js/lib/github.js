@@ -361,7 +361,20 @@
 			// -------
 
 			this.getCommit = function (branch, sha, cb) {
-				_request("GET", repoPath + "/git/commits/" + sha, null, function (err, commit) {
+				_request("GET", repoPath + "/commits/" + sha, null, function (err, commit) {
+					if (err) return cb(err);
+					cb(null, commit);
+				});
+			};
+			
+			// Get a list of the commits
+			
+			this.getCommits = function (author, cb) {
+				var params = "";
+				if(author) {
+					params = "?author=" + author;
+				}
+				_request("GET", repoPath + "/git/commits" + params, null, function (err, commit) {
 					if (err) return cb(err);
 					cb(null, commit);
 				});

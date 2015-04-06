@@ -1,7 +1,7 @@
 'use strict';
 
 /* Main app declaration */
-angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-git.controllers', 'code-civil-git.services', 'code-civil-git.directives'])
+angular.module('code-civil-git', ['ngSanitize', 'ui.router', 'btford.markdown', 'sticky', 'code-civil-git.controllers', 'code-civil-git.services', 'code-civil-git.directives'])
 
 /* App Configuration */
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -37,4 +37,21 @@ angular.module('code-civil-git', ['ui.router', 'btford.markdown', 'code-civil-gi
 /* Removes file extension */
 .filter("fileName", function (Tools) {
 	return Tools.getFileName;
+})
+
+/* Format diff */
+.filter("diff", function (Tools) {
+	return Tools.formatDiff;
+})
+
+/* Status */
+.filter("status", function () {
+	return function(status) {
+		switch(status) {
+				case 'modified': return 'Modifié';
+				case 'added': return 'Ajouté';
+				case 'removed': return 'Supprimé';
+				default: return status;
+		}
+	}
 })

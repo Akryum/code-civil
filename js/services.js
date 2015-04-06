@@ -128,7 +128,30 @@ angular.module('code-civil-git.services', [])
 		 * Gets commits.
 		 */
 		getCommits: function (callback) {
-
+			repo.getCommits(null, function (err, data) {
+				$timeout(function () {
+					callback.apply(null, [err, data]);
+				});
+			});
+		},
+		/**
+		 * Gets a commit.
+		 */
+		getCommit: function(sha, callback) {
+			var cached = cache['commit_' + sha];
+			if (cached) {
+				callback.apply(null, [cached.err, cached.data]);
+			} else {
+				repo.getCommit('master', sha, function (err, data) {
+					$timeout(function () {
+						cache['commit_' + sha] = {
+							err: err,
+							data: data
+						}
+						callback.apply(null, [err, data]);
+					});
+				});
+			}
 		}
 	};
 })
@@ -276,6 +299,48 @@ angular.module('code-civil-git.services', [])
 			});
 			
 			return path;
+		},
+		
+		formatDiff: function(text) {
+			
+			text = text.replace(/@@.*@@\s((\+|-)?\s?Article\s[0-9-]+\s?(\+|-)?\s?----)?/ig, "");
+			
+			var lines = text.split('\n');
+			
+			var oldText = "";
+			var newText = "";
+			
+			console.log(lines);
+			
+			var l = lines.length, line;
+			for(var i = 0; i < l; i++) {
+				line = lines[i];
+				
+				if(line.match(/^\s*$/ig)) {
+					line = "[BR]";
+				}
+				
+				if(line.charAt(0) == '+') {
+					newText += line.substr(1) + " ";
+				} else if(line.charAt(0) == '-') {
+					oldText += line.substr(1) + " ";
+				} else {
+					oldText += line + " ";
+					newText += line + " ";
+				}
+			}
+			
+			var dmp = new diff_match_patch();
+			
+			var d = dmp.diff_main(oldText, newText);
+			
+			dmp.diff_cleanupSemantic(d);
+			
+			var ds = dmp.diff_prettyHtml(d);
+			
+			ds = ds.replace(/\[BR\]/g, "<br/>");
+			
+			return ds;
 		}
 	}
 })

@@ -27,6 +27,32 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 	document.title = "Code Civil Cloud";
 })
 
+.controller('CommitsCtrl', function(GitService) {
+	
+	var controller = this;
+	
+	controller.loading = true;
+	
+	GitService.getCommits(function(err, data) {
+		controller.loading = false;
+		console.log(data);
+		
+		if(err) {
+			
+		} else {
+			controller.commits = new Array();
+
+			var l = data.length, commit;
+			for(var i = 0; i < l; i++) {
+				commit = data[i];
+				if(commit.commit.author.email == "noreply@gouv.fr") {
+					controller.commits.push(commit);
+				}
+			}
+		}
+	});
+})
+
 /* List Tree */
 
 .controller('TreeCtrl', function ($state, $stateParams, GitService, SettingsService, Tools) {

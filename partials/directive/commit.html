@@ -1,0 +1,23 @@
+<div class="commit">
+
+	<div class="message" sticky sticky-class="sticky"><i class="fa fa-pencil"></i> {{ commit.commit.message }}</div>
+
+	<div class="spinner" ng-show="loading"></div>
+
+	<div class="content" ng-hide="loading">
+
+		<div class="file" ng-repeat="file in files">
+
+			<div class="head">
+				<a class="title" href="#/read/{{ file.filename }}"><i class="fa fa-file"></i> {{ file.filename | fileName }}</a>
+
+				<span class="status"><i class="fa fa-pencil" ng-if="file.status == 'modified'"></i><i class="fa fa-plus-circle" ng-if="file.status == 'added'"></i><i class="fa fa-minus-circle" ng-if="file.status == 'removed'"></i> {{ file.status | status }}</span>
+			</div>
+
+			<div class="diff" ng-bind-html="file.diff"></div>
+
+		</div>
+
+	</div>
+
+</div>
