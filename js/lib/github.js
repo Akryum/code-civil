@@ -366,19 +366,6 @@
 					cb(null, commit);
 				});
 			};
-			
-			// Get a list of the commits
-			
-			this.getCommits = function (author, cb) {
-				var params = "";
-				if(author) {
-					params = "?author=" + author;
-				}
-				_request("GET", repoPath + "/git/commits" + params, null, function (err, commit) {
-					if (err) return cb(err);
-					cb(null, commit);
-				});
-			};
 
 			// For a given file path, get the corresponding sha (blob for files, tree for dirs)
 			// -------

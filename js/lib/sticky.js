@@ -134,21 +134,19 @@
 				var parentBounds = elem.parentNode.getBoundingClientRect();
 				
 				parentBottom = parentBounds.bottom;
-				
-				if(isSticking) {
-					parentBottom += elem.offsetHeight;
-				}
 
 				if ( anchor === 'top' ) {
 					scrolledDistance = window.pageYOffset || doc.scrollTop;
 					scrollTop        = scrolledDistance  - (doc.clientTop || 0);
-					shouldStick      = scrollTop >= stickyLine && parentBottom >= elem.offsetHeight;
+					shouldStick      = scrollTop >= stickyLine && parentBottom >= elem.offsetHeight + 20;
 				} else {
 					scrollBottom     = window.pageYOffset + window.innerHeight;
 					shouldStick      = scrollBottom <= stickyLine;
 				}
 
 				// Switch the sticky mode if the element crosses the sticky line
+				
+				//console.log(scrollTop, stickyLine, shouldStick);
 				
 				if( elem.getAttribute('sticky-margin') != undefined ) {
 					
@@ -157,7 +155,6 @@
 					} else {
 						$elem.css('margin-top', 0);
 					}
-					
 				} else {
 
 					if ( shouldStick && !isSticking )

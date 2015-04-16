@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" ng-app="code-civil-git">
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no">
@@ -33,8 +34,8 @@
 	<script src="js/directives.js"></script>
 </head>
 
-<body>
-	<div class="wrapper">
+<body ng-controller="AppCtrl as App" ng-class="{dark:App.darkMode, animate:App.animate}">
+	<div class="wrapper" ng-controller="SearchCtrl as Search" ng-class="{'search-open':!Search.closed && (Search.results != null || Search.loading)}">
 
 		<!-- Header -->
 
@@ -42,24 +43,39 @@
 
 			<!-- Search -->
 
-			<div class="search-box" ng-controller="SearchCtrl as Search">
+			<div class="search-box" ng-class="{open:!Search.closed && (Search.results != null || Search.loading)}">
 
-				<!-- Close button -->
+				<div class="search-bar">
 
-				<a class="search-action" ng-click="Search.closed = !Search.closed">
-					<i class="fa fa-search" ng-if="Search.closed || (Search.results == null && !Search.loading)"></i>
-					<i class="fa fa-times" ng-if="!Search.closed && (Search.results != null || Search.loading)" title="Fermer"></i>
-				</a>
+					<!-- Close button -->
 
-				<!-- Input field -->
+					<a class="search-action" ng-click="Search.closed = !Search.closed">
+						<i class="fa fa-search" ng-if="Search.closed || (Search.results == null && !Search.loading)"></i>
+						<i class="fa fa-times" ng-if="!Search.closed && (Search.results != null || Search.loading)" title="Fermer"></i>
+					</a>
 
-				<input class="search-input" placeholder="Rechercher..." ng-model="searchQuery" ng-enter="Search.search(searchQuery);" ng-click="Search.closed = false" />
+					<!-- Input field -->
 
-				<!-- Search button -->
+					<input class="search-input" placeholder="Rechercher..." ng-model="searchQuery" ng-enter="Search.search(searchQuery);" ng-click="Search.closed = false" />
 
-				<a class="search-action" ng-click="Search.search(searchQuery);" ng-if="!Search.closed" title="Lancer la recherche">
-					<i class="fa fa-arrow-right"></i>
-				</a>
+					<!-- Search button -->
+
+					<a class="search-action" ng-click="Search.search(searchQuery);" ng-if="!Search.closed" title="Lancer la recherche">
+						<i class="fa fa-arrow-right"></i>
+					</a>
+					
+					
+					<!-- Toolbar -->
+					
+					<div class="toolbar" ng-show="Search.closed">
+						
+						<!-- Dark Mode -->
+						
+						<a title="Mode Sombre" ng-click="App.toggleDarkMode()"><i class="fa fa-adjust"></i></a>
+						
+					</div>
+
+				</div>
 
 				<!-- Search results -->
 
@@ -94,12 +110,13 @@
 		<footer>
 			<div class="links">
 				<a href="https://github.com/Akryum/code-civil/issues"><i class="fa fa-bug"></i> Signaler un problème</a>
-				<a href="https://github.com/steeve/france.code-civil"><i class="fa fa-database"></i> Source &amp; Données</a>
+				<a href="https://github.com/steeve/france.code-civil"><i class="fa fa-database"></i> Open Data</a>
 				<a href="https://github.com/Akryum/code-civil"><i class="fa fa-github"></i> Sources du site</a>
 			</div>
-			<div class="credits">Réalisé par Guillaume CHAU @ Akryum</div>
+			<div class="credits">Réalisé par Guillaume CHAU <a href="https://twitter.com/Akryum">@Akryum</a></div>
 		</footer>
 
 	</div>
 </body>
+
 </html>

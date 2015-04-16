@@ -9,18 +9,42 @@
 		</span>
 	</div>
 
-	<!-- Title -->
+	<section>
 
-	<h2><i class="fa fa-file"></i> {{ Read.name | fileName }}</h2>
+		<!-- Title -->
 
-	<!-- Content -->
+		<h2><i class="fa fa-file"></i> {{ Read.name | fileName }}</h2>
 
-	<div class="spinner" ng-show="Read.loading" />
+		<!-- Content -->
 
-	<div class="page-content">
+		<div class="spinner" ng-show="Read.loading" />
 
-		<article btf-markdown="Read.data" ng-hide="Read.loading"></article>
+		<div class="page-content">
 
-	</div>
+			<article btf-markdown="Read.data" ng-hide="Read.loading"></article>
+
+		</div>
+
+	</section>
+
+	<section>
+
+		<!-- Title -->
+
+		<h2><i class="fa fa-history"></i> Modifications</h2>
+
+		<!-- Content -->
+
+		<div class="spinner" ng-show="Read.loadingCommits" />
+
+		<div class="page-content">
+			<div class="commits">
+
+				<commit ng-repeat="commit in Read.commits" commit="commit" path="Read.path"/>
+
+			</div>
+		</div>
+
+	</section>
 
 </div>

@@ -127,8 +127,12 @@ angular.module('code-civil-git.services', [])
 		/**
 		 * Gets commits.
 		 */
-		getCommits: function (callback) {
-			repo.getCommits(null, function (err, data) {
+		getCommits: function (options, callback) {
+			if(callback == undefined) {
+				callback = options;
+				options = null;
+			}
+			repo.getCommits(options, function (err, data) {
 				$timeout(function () {
 					callback.apply(null, [err, data]);
 				});
@@ -162,7 +166,7 @@ angular.module('code-civil-git.services', [])
 	return {
 		getItem: function (id, defaultValue) {
 			var value = localStorage.getItem(id);
-			if (value == null) {
+			if (value == undefined) {
 				return defaultValue;
 			}
 			return value;
@@ -222,8 +226,6 @@ angular.module('code-civil-git.services', [])
 
 		nameSort: function (name) {
 			var score = 0;
-			
-			console.log(name);
 			
 			if (name.match(/préliminaire/ig)) {
 				score -= 1000;
@@ -339,8 +341,14 @@ angular.module('code-civil-git.services', [])
 			var ds = dmp.diff_prettyHtml(d);
 			
 			ds = ds.replace(/\[BR\]/g, "<br/>");
+			oldText = oldText.replace(/\[BR\]/g, "<br/>");
+			newText = newText.replace(/\[BR\]/g, "<br/>");
 			
-			return ds;
+			return {
+				oldText: oldText,
+				newText: newText,
+				diffText: ds
+			};
 		}
 	}
 })

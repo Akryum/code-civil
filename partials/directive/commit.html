@@ -1,22 +1,29 @@
 <div class="commit">
 
-	<div class="message" sticky sticky-class="sticky"><i class="fa fa-pencil"></i> {{ commit.commit.message }}</div>
+	<div class="message" sticky useplaceholder sticky-class="sticky"><i class="fa fa-pencil"></i> {{ commit.commit.message }}</div>
 
 	<div class="spinner" ng-show="loading"></div>
 
 	<div class="content" ng-hide="loading">
 
-		<div class="file" ng-repeat="file in files">
+		<div class="file" ng-repeat="file in files | orderBy:'index'" ng-show="!path || file.inCurrentPath || displayOtherArticles">
 
 			<div class="head">
 				<a class="title" href="#/read/{{ file.filename }}"><i class="fa fa-file"></i> {{ file.filename | fileName }}</a>
 
 				<span class="status"><i class="fa fa-pencil" ng-if="file.status == 'modified'"></i><i class="fa fa-plus-circle" ng-if="file.status == 'added'"></i><i class="fa fa-minus-circle" ng-if="file.status == 'removed'"></i> {{ file.status | status }}</span>
+				
+				<a ng-click="file.displayed = true;" ng-show="!file.displayed"><i class="fa fa-eye"></i> Afficher le contenu modifié</a>
+				<a ng-click="file.displayed = false;" ng-show="file.displayed"><i class="fa fa-eye-slash"></i> Masquer le contenu modifié</a>
+				
+				<select ng-show="file.displayed" ng-model="file.displayDiff" ng-options="option.value as option.label for option in diffSelect"></select>
 			</div>
-
-			<div class="diff" ng-bind-html="file.diff"></div>
+			
+			<div class="diff" ng-bind-html="file.diff[file.displayDiff]" ng-show="file.displayed"></div>
 
 		</div>
+		
+		<a ng-show="path && !displayOtherArticles && files.length > 1" ng-click="displayOtherArticles = true;"><i class="fa fa-eye"></i> Afficher les autres articles</a>
 
 	</div>
 

@@ -2,6 +2,22 @@
 
 angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.services'])
 
+.controller('AppCtrl', function(SettingsService) {
+	
+	var controller = this;
+	
+	controller.darkMode = SettingsService.getItem('darkMode', false) == 'true';
+	console.log(SettingsService.getItem('darkMode', false));
+	
+	controller.toggleDarkMode = function() {
+		controller.animate = true;
+		controller.darkMode = !controller.darkMode;
+		SettingsService.setItem('darkMode', controller.darkMode);
+		console.log(SettingsService.getItem('darkMode', false));
+	};
+	
+})
+
 /* Home */
 
 .controller('HomeCtrl', function (GitService, Tools) {
@@ -122,6 +138,7 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 	var controller = this;
 
 	controller.loading = true;
+	controller.loadingCommits = true;
 	
 	console.log($stateParams);
 
@@ -161,6 +178,26 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 				controller.data = data;
 			}
 		});
+		
+		GitService.getCommits({
+			path: controller.path
+		}, function(err, data) {
+			controller.loadingCommits = false;
+
+			if(err) {
+
+			} else {
+				controller.commits = new Array();
+
+				var l = data.length, commit;
+				for(var i = 0; i < l; i++) {
+					commit = data[i];
+					if(commit.commit.author.email == "noreply@gouv.fr") {
+						controller.commits.push(commit);
+					}
+				}
+			}
+		});
 
 		// Page title
 		var title = "";
@@ -194,6 +231,7 @@ angular.module('code-civil-git.controllers', ['ui.router', 'code-civil-git.servi
 			} else {
 				controller.results = data.items;
 			}
+			$('.search-input').blur();
 		});
 	};
 })

@@ -1,17 +1,33 @@
 /* General */
 
+.animate, .animate * {
+	transition: background 1s;
+}
+
+html {
+	
+}
+
 body {
 	font-family: sans-serif;
 	margin: 0;
 	background: #f8f8f8;
 }
 
+body.dark {
+	background: #2a2a2a;
+	color: #eee;
+}
+
 header {
 	background: white;
-	padding: 0 42px;
 	margin-bottom: 12px;
 	display: flex;
 	flex-direction: row;
+}
+
+.dark header {
+	background: #555;
 }
 
 header > div {
@@ -25,8 +41,25 @@ a {
 	cursor: pointer;
 }
 
+.dark a {
+	color: #6bb2ef;
+}
+
 a:hover {
-	color: #3e96e0;
+	color: #3e96e0 !important;
+}
+
+.dark a:hover {
+	color: #a6cded !important;
+}
+
+.dark input {
+	color: white;
+}
+
+.wrapper.search-open .page {
+	height: 0;
+	overflow: hidden;
 }
 
 .error {
@@ -39,6 +72,12 @@ a:hover {
 	background: url('../img/spinner.gif') no-repeat center center;
 	background-size: contain;
 }
+
+.dark .spinner {
+	-moz-filter: invert(1);
+	-webkit-filter: invert(1);
+	filter: invert(1);
+}
 /* Search */
 
 .search-box {
@@ -46,6 +85,26 @@ a:hover {
 	font-size: 1;
 	font-family: sans-serif;
 	color: #444;
+	display: flex;
+	flex-direction: column;
+}
+
+.dark .search-box {
+	background: #1f1f1f;
+}
+
+.search-box.open {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+
+.search-bar {
+	padding: 0 42px;
+	flex: auto 0 0;
 	display: flex;
 	flex-direction: row;
 }
@@ -68,16 +127,22 @@ a:hover {
 }
 
 .search-results {
-	position: fixed;
+	flex: auto 1 1;
+	/*position: fixed;
 	top: 50px;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	bottom: 0;*/
 	background: white;
 	z-index: 10;
 	padding: 10px 42px;
 	border-top: solid 1px #eee;
 	overflow: auto;
+}
+
+.dark .search-results {
+	background: rgb(31, 31, 31);
+	border-top: solid 1px #393939;
 }
 
 .search-results > .spinner {
@@ -94,8 +159,13 @@ a:hover {
 	border-bottom: solid 1px #eee;
 }
 
+.dark .search-result {
+	border-bottom: solid 1px #2f2f2f;
+}
+
 .search-result:last-child {
 	border-bottom: none;
+	margin-bottom: 42px;
 }
 
 .search-result .spinner {
@@ -107,6 +177,10 @@ a:hover {
 	color: #666;
 }
 
+.dark .search-result .preview {
+	color: #d8d8d8;
+}
+
 .search-result .preview p {
 	margin: 6px 0;
 }
@@ -114,6 +188,18 @@ a:hover {
 .search-result .preview p strong {
 	font-weight: normal;
 	background: rgb(207, 231, 255);
+	border-radius: 2px;
+}
+
+.dark .search-result .preview p strong {
+	background: rgb(255, 128, 0);
+	color: black;
+}
+/* Toolbar */
+
+.search-box .toolbar > a {
+	padding: 16px 0;
+	display: inline-block;
 }
 /* Page */
 
@@ -125,8 +211,16 @@ h2 {
 	margin-bottom: 6px;
 }
 
+.dark h2 {
+	color: #b2b9c1;
+}
+
 h2 .secondary {
 	color: #aaa;
+}
+
+.dark h2 .secondary {
+	color: #848484;
 }
 
 h2 .fa {
@@ -149,6 +243,10 @@ h2 .fa {
 
 .presentation {
 	color: #888;
+}
+
+.dark .presentation {
+	color: #b2b9c1;
 }
 
 .page .actions {
@@ -192,6 +290,10 @@ nav > ul > li {
 	list-style: none;
 	background: #fff;
 	border-radius: 3px;
+}
+
+.dark nav > ul > li {
+	background: #2d3033;
 }
 
 nav > ul > li > a {
@@ -242,6 +344,10 @@ article {
 	text-align: justify;
 }
 
+.dark article {
+	background: #2d3033;
+}
+
 article h2 {
 	margin-top: 16px;
 }
@@ -273,14 +379,26 @@ article h2 {
 	margin-bottom: 42px;
 	background: #fff;
 	border-radius: 3px;
-	transition: background 0.1s;
+}
+
+.dark .commit {
+	background: #2d3033;
+}
+
+.commit .message {
+	padding: 10px 0;
 }
 
 .commit .message.sticky {
 	background: white;
-	padding: 10px 0;
 	z-index: 100;
 	border-bottom: solid 1px #ddd;
+	transition: none;
+}
+
+.dark .commit .message.sticky {
+	background: #2d3033;
+	border-bottom: solid 1px #555;
 }
 
 .commit .file {
@@ -290,12 +408,21 @@ article h2 {
 	border-bottom: dashed 1px #ddd;
 }
 
-.commit .file:last-child {
+.dark .commit .file {
+	color: #d0d0d0;
+	border-bottom: dashed 1px #464646;
+}
+
+.commit .file:last-of-type {
 	padding-bottom: 0;
 	border-bottom: none;
 }
 
-.commit .file .title {
+.commit .file .head {
+	margin-bottom: 6px;
+}
+
+.commit .file .head > * {
 	margin-right: 10px;
 }
 
@@ -317,6 +444,30 @@ article h2 {
 	background: #fcc8c8;
 	color: #bc2626;
 }
+
+.dark .diff ins {
+	background: none;
+	color: #00ce08;
+}
+
+.dark .diff del {
+	background: none;
+	color: #f24242;
+}
+/* Forms */
+
+select {
+	border: solid 1px #ccc;
+	border-radius: 3px;
+	font-size: 1em;
+	padding: 2px 4px;
+}
+
+.dark select {
+	border: solid 1px #333;
+	background: #555;
+	color: #ddd;
+}
 /* Footer */
 
 footer {
@@ -327,8 +478,16 @@ footer {
 	padding: 32px 10px;
 }
 
+.dark footer {
+	border-top: solid 1px #383838;
+}
+
 footer a {
 	color: #666;
+}
+
+.dark footer a {
+	color: #cbcbcb;
 }
 
 footer .links a {
@@ -340,10 +499,17 @@ footer .credits {
 	margin-top: 32px;
 	font-size: 0.7em;
 }
+
+.dark footer .credits {
+	color: #7c7c7c;
+}
 /* Mobile */
 
 @media(max-width: 640px) {
-	header {
+	.animate, .animate * {
+		transition: none;
+	}
+	.search-bar {
 		padding: 0 10px;
 	}
 	.search-results > .no-result {
@@ -385,6 +551,37 @@ footer .credits {
 		top: 60px;
 		pointer-events: none;
 	}
+	.dark .search-result .preview:after {
+		content: "";
+		display: block;
+		background: -moz-linear-gradient(top, rgba(31, 31, 31, 0) 0%, rgba(31, 31, 31, 1) 100%);
+		/* FF3.6+ */
+		
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(31, 31, 31, 0)), color-stop(100%, rgba(31, 31, 31, 1)));
+		/* Chrome,Safari4+ */
+		
+		background: -webkit-linear-gradient(top, rgba(31, 31, 31, 0) 0%, rgba(31, 31, 31, 1) 100%);
+		/* Chrome10+,Safari5.1+ */
+		
+		background: -o-linear-gradient(top, rgba(31, 31, 31, 0) 0%, rgba(31, 31, 31, 1) 100%);
+		/* Opera 11.10+ */
+		
+		background: -ms-linear-gradient(top, rgba(31, 31, 31, 0) 0%, rgba(31, 31, 31, 1) 100%);
+		/* IE10+ */
+		
+		background: linear-gradient(to bottom, rgba(31, 31, 31, 0) 0%, rgba(31, 31, 31, 1) 100%);
+		/* W3C */
+		
+		filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff', GradientType=0);
+		/* IE6-9 */
+		
+		position: absolute;
+		height: 40px;
+		left: 0;
+		right: 0;
+		top: 60px;
+		pointer-events: none;
+	}
 	.page {
 		padding: 10px 10px;
 	}
@@ -393,5 +590,18 @@ footer .credits {
 	}
 	.summary {
 		display: none;
+	}
+	.commit .file .head > * {
+		margin-bottom: 10px;
+		display: inline-block;
+	}
+	footer .links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	footer .links a {
+		
+		margin: 16px;
 	}
 }

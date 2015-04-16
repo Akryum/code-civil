@@ -86,12 +86,32 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 	return {
 		restrict: 'E',
 		scope: {
-			commit: '='
+			commit: '=',
+			path: '='
 		},
 		templateUrl: 'partials/directive/commit.html',
 		controller: function($scope) {
 			
 			$scope.loading = true;
+			
+			$scope.diffSelect = [
+				{
+					value: "diffText",
+					label: "Différences"
+				},
+				{
+					value: "oldText",
+					label: "Avant"
+				},
+				{
+					value: "newText",
+					label: "Après"
+				}
+			];
+			
+			if($scope.path) {
+				$scope.displayOtherArticles = false;
+			}
 			
 			GitService.getCommit($scope.commit.sha, function(err, data) {
 				$scope.loading = false;
@@ -101,9 +121,19 @@ angular.module('code-civil-git.directives', ['code-civil-git.services'])
 				} else {
 					$scope.files = data.files;
 					
-					var l = data.files.length;
+					var l = data.files.length, file;
 					for(var i = 0; i < l; i ++) {
-						data.files[i].diff = Tools.formatDiff(data.files[i].patch);
+						file = data.files[i];
+						file.diff = Tools.formatDiff(file.patch);
+						file.inCurrentPath = (!$scope.path || $scope.path == file.filename);
+						file.displayed = file.inCurrentPath;
+						file.displayDiff = "diffText";
+						
+						if(file.inCurrentPath) {
+							file.index = i;
+						} else {
+							file.index = data.files.length + i;
+						}
 					}
 				}
 			});
